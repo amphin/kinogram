@@ -1,0 +1,27 @@
+.block {
+  display: inline-block;
+  --size: 20px;
+  height: var(--size);
+  width: var(--size);
+  border: 1px black solid;
+  padding: 0px;
+  position: relative;
+  align-items: center;
+}
+
+.block.empty {
+  background-color: #fff;
+}
+
+.block.filled {
+  background-color: #646464;
+}
+
+.block.crossed {
+  background-color: #fff;
+}
+
+.cross {
+  display: flex;
+  margin: 0 auto;
+}

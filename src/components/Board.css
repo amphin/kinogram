@@ -1,0 +1,8 @@
+.grid-container {
+  display: inline-grid;
+  --size: 3;
+  grid-template-columns: repeat(var(--size), auto);
+  grid-template-rows: repeat(var(--size), auto);
+  grid-gap: 0px;
+  padding: 0px;
+}

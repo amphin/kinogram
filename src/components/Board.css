@@ -4,5 +4,6 @@
   grid-template-columns: repeat(var(--size), auto);
   grid-template-rows: repeat(var(--size), auto);
   grid-gap: 0px;
+  border: 0.5px black solid;
   padding: 0px;
 }

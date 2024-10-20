@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./Block.css";
 import { CellState } from "../CellState.js";
 
@@ -24,7 +24,7 @@ function Block({ handleClick, x=-1, y=-1 }) {
     {/* TODO: refer to cross.svg */}
     if (cellState === CellState.CROSSED) {
       return (
-        <svg className="cross" width="18" height="18">
+        <svg className="cross" width="20" height="20">
         <line 
         x1="0" y1="0"
         x2={document.getElementById("button-id").clientWidth} 
@@ -42,13 +42,17 @@ function Block({ handleClick, x=-1, y=-1 }) {
       return null;
     };
 
+    useEffect(() => {
+      console.log("and set to " + cellState);
+    }, [cellState, handleClick, x, y]); // only on rerenders
+
   return (
     <>
       <div 
       type="button" id="button-id"
       className={"block " + cellStyle}
+
       onClick={() => {
-        handleClick(x, y);
         console.log("left clicked");
         if (cellState === CellState.FILLED) {
           setCellState(CellState.EMPTY);
@@ -56,9 +60,9 @@ function Block({ handleClick, x=-1, y=-1 }) {
           setCellState(CellState.FILLED);
         }
       }}
+
       onContextMenu={(e) => {
         e.preventDefault();
-        handleClick(x, y);
         console.log("right clicked");
         if (cellState === CellState.CROSSED) {
           setCellState(CellState.EMPTY);
@@ -68,7 +72,7 @@ function Block({ handleClick, x=-1, y=-1 }) {
       }}
       >
 
-        {renderCross()}
+      {renderCross()}
       </div>
     </>
   );

@@ -3,7 +3,7 @@
   --size: 20px;
   height: var(--size);
   width: var(--size);
-  border: 1px black solid;
+  border: 0.5px black solid;
   padding: 0px;
   position: relative;
   align-items: center;

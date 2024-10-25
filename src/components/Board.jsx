@@ -3,19 +3,20 @@ import "./Board.css"
 import Block from "./Block";
 
 Board.propTypes = {
-  size: PropTypes.number,
+  dims: PropTypes.number,
 }
 
-function Board({size=3}) {
 
-  function handleClick(x, y, cellState) { 
+function Board({dims=3}) {
+
+  const handleClick = (x, y, cellState) => { 
     console.log(`Block clicked at ${x}, ${y}: ${cellState}`);
   }
 
-  function generateBlocks(size) {
+  function generateBlocks(dims) {
     const blocks = [];
-      for (let x=0; x < size; x++) {
-        for (let y=0; y < size; y++) {
+      for (let y=0; y < dims; y++) {
+        for (let x=0; x < dims; x++) {
           console.log("foring x=" + x + ", y=" + y);
           blocks.push(<Block key="${x}-${y}" x={x} y={y} handleClick={handleClick}/>);
         }
@@ -25,8 +26,8 @@ function Board({size=3}) {
 
   return (
     <>
-    <div className="grid-container" style={{'--size': size}}>
-      {generateBlocks(size)}
+    <div className="grid-container" style={{'--dims': dims}}>
+      {generateBlocks(dims)}
     </div>
     </>
   );

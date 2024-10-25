@@ -1,9 +1,37 @@
 .grid-container {
   display: inline-grid;
-  --size: 3;
-  grid-template-columns: repeat(var(--size), auto);
-  grid-template-rows: repeat(var(--size), auto);
+  --dims: 3;
+  grid-template-columns: repeat(var(--dims), auto);
+  grid-template-rows: repeat(var(--dims), auto);
   grid-gap: 0px;
   border: 0.5px black solid;
   padding: 0px;
+}
+
+.block {
+  display: inline-block;
+  --size: 20px;
+  height: var(--size);
+  width: var(--size);
+  border: 0.5px black solid;
+  padding: 0px;
+  position: relative;
+  align-items: center;
+}
+
+.block.empty {
+  background-color: #fff;
+}
+
+.block.filled {
+  background-color: #646464;
+}
+
+.block.crossed {
+  background-color: #fff;
+}
+
+.cross {
+  display: flex;
+  margin: 0 auto;
 }

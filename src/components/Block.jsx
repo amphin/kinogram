@@ -1,15 +1,16 @@
 import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
-import "./Block.css";
+import "./Board.jsx";
+import SVGCross from "./SVGCross";
 import { CellState } from "../CellState.js";
 
 Block.propTypes = {
+  x: PropTypes.number.isRequired,
+  y: PropTypes.number.isRequired,
   handleClick: PropTypes.func,
-  x: PropTypes.number,
-  y: PropTypes.number,
 };
 
-function Block({ handleClick, x=-1, y=-1 }) {
+function Block({ x=-1, y=-1, handleClick }) {
   const [cellState, setCellState] = useState(CellState.EMPTY);
 
   const cellStyle = {
@@ -18,32 +19,21 @@ function Block({ handleClick, x=-1, y=-1 }) {
     [CellState.CROSSED]: "crossed",
   }[cellState];
 
-  let cellSize = 20;
-
   function renderCross() {
     {/* TODO: refer to cross.svg */}
     if (cellState === CellState.CROSSED) {
       return (
-        <svg className="cross" width="20" height="20">
-        <line 
-        x1="0" y1="0"
-        x2={document.getElementById("button-id").clientWidth} 
-        y2={document.getElementById("button-id").clientHeight} 
-        overflow="hidden" stroke="black" strokeWidth="1"/>
-
-        <line 
-        x1={document.getElementById("button-id").clientWidth} 
-        y1={document.getElementById("button-id").clientHeight} 
-        x2="0" y2="0" 
-        overflow="hidden" stroke="black" strokeWidth="1" 
-        transform="rotate(90 9 9)"/>
-        </svg>);
+        <SVGCross 
+        outer={document.getElementById("button-id").offsetHeight} 
+        inner={document.getElementById("button-id").clientHeight} 
+        />);
       }
       return null;
     };
 
+
     useEffect(() => {
-      console.log("and set to " + cellState);
+      handleClick(x, y, cellState);
     }, [cellState, handleClick, x, y]); // only on rerenders
 
   return (
@@ -52,23 +42,27 @@ function Block({ handleClick, x=-1, y=-1 }) {
       type="button" id="button-id"
       className={"block " + cellStyle}
 
-      onClick={() => {
-        console.log("left clicked");
-        if (cellState === CellState.FILLED) {
-          setCellState(CellState.EMPTY);
-        } else {
-          setCellState(CellState.FILLED);
+      onMouseDown={(e) => {
+        if (e.button === 0) {
+          console.log("left clicked");
+          if (cellState === CellState.FILLED) {
+            setCellState(CellState.EMPTY);
+          } else {
+            setCellState(CellState.FILLED);
+          }
+        }
+        else if (e.button === 2) {
+          console.log("right clicked");
+          if (cellState === CellState.CROSSED) {
+            setCellState(CellState.EMPTY);
+          } else {
+            setCellState(CellState.CROSSED);
+          }
         }
       }}
 
       onContextMenu={(e) => {
         e.preventDefault();
-        console.log("right clicked");
-        if (cellState === CellState.CROSSED) {
-          setCellState(CellState.EMPTY);
-        } else {
-          setCellState(CellState.CROSSED);
-        }
       }}
       >
 

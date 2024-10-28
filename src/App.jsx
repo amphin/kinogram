@@ -1,6 +1,11 @@
 import './App.css'
 import Board from './components/Board'
-import NumberPane from './components/NumberPane'
+import Grid from './components/Grid'
+import HintPane from './components/HintBar'
+import Test from './components/Test'
+import { createContext } from 'react'
+
+export const TestContext = createContext();
 
 function App() {
 
@@ -10,9 +15,12 @@ function App() {
       {/* <div style={{padding: '5px'}}>
         <Block x={0} y={0}/>
       </div> */}
-      <Board dims={10}/>
-      <NumberPane />
-      <p>end</p>
+      <Board />
+      {/* <Grid dims={10}/> */}
+      {/* <HintPane vertical={true}/> */}
+      {/* <TestContext.Provider value="context">
+        <Test/>
+      </TestContext.Provider> */}
     </>
   )
 }

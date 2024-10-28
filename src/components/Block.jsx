@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import { useState, useEffect } from "react";
-import "./Board.jsx";
+import { useState, useEffect, useContext } from "react";
+import "./Board.css";
 import SVGCross from "./SVGCross";
 import { CellState } from "../CellState.js";
+import { SizeContext } from "./Board.jsx";
 
 Block.propTypes = {
   x: PropTypes.number.isRequired,
@@ -12,6 +13,7 @@ Block.propTypes = {
 
 function Block({ x=-1, y=-1, handleClick }) {
   const [cellState, setCellState] = useState(CellState.EMPTY);
+  const size = useContext(SizeContext);
 
   const cellStyle = {
     [CellState.EMPTY]: "empty",
@@ -41,6 +43,8 @@ function Block({ x=-1, y=-1, handleClick }) {
       <div 
       type="button" id="button-id"
       className={"block " + cellStyle}
+      style={{'--size': size}}
+      //TODO: add size parameter
 
       onMouseDown={(e) => {
         if (e.button === 0) {

@@ -1,4 +1,4 @@
-.grid-container {
+.grid {
   display: inline-grid;
   --dims: 3;
   grid-template-columns: repeat(var(--dims), auto);
@@ -34,4 +34,46 @@
 .cross {
   display: flex;
   margin: 0 auto;
+}
+
+.hint-pane {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.5px black solid;
+  background-color: #b5b5b5;
+}
+
+
+.hint-bar {
+  /* position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50.5%, 18%); */
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  border: 0.5px black solid;
+  background-color: #b5b5b5;
+}
+
+/*TODO: simpler way to set dimensions?*/
+.hint { 
+  display: flex;
+  --size: 20px;
+  height: var(--size);
+  width: var(--size);
+  align-items: center;
+  justify-content: center;
+  font-size: 60%;
+  color: #000;
+  border: #646464 0.5px solid;
+  background-color: #c4c4c4;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.hint.filled {
+  color: #2f2f2f;
 }

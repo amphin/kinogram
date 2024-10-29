@@ -1,16 +1,14 @@
 import PropTypes from "prop-types";
 import "./Board.css"
 import Block from "./Block";
-import HintBar from "./HintBar";
-import { useState } from "react";
-import { SizeContext } from "./Board.jsx";
 
 Grid.propTypes = {
-  dims: PropTypes.number,
-} //TODO: move hardcoded value
+  dims: PropTypes.number.isRequired,
+  handleBlockClick: PropTypes.func.isRequired
+}
 
-function Grid({dims=3}) { //TODO: default 20, or isRequired?
-  const [size, setSize] = useState("20px");
+
+function Grid({dims, handleBlockClick}) { 
 
   const handleClick = (x, y, cellState) => { 
     console.log(`Block clicked at ${x}, ${y}: ${cellState}`);
@@ -22,9 +20,7 @@ function Grid({dims=3}) { //TODO: default 20, or isRequired?
         for (let x=0; x < dims; x++) {
           console.log("foring x=" + x + ", y=" + y);
           blocks.push(
-          <SizeContext.Provider value="20px">
-            <Block key="${x}-${y}" x={x} y={y} handleClick={handleClick}/>
-          </SizeContext.Provider>
+            <Block key="${x}-${y}" x={x} y={y} handleBlockClick={handleBlockClick}/>
           );
         }
       }

@@ -1,20 +1,33 @@
 import "./Board.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import { SizeContext } from "./Board.jsx";
+import { HintState } from "../HintState.js";
 
 Hint.propTypes = {  
   num: PropTypes.number.isRequired
 }
 
-function Hint({num=0}) {
-  const [number, setNumber] = useState(num) //need state?
-  const size = useContext(SizeContext);
+function Hint({num}) {
+  const [number, setNumber] = useState(num)
+  const [hintState, setHintState] = useState(HintState.UNFILLED) //need state?
+
+  const hintStyle = {
+    [HintState.UNFILLED]: "",
+    [HintState.FILLED]: "filled",
+  }[hintState];
 
   return (
-    <div className="hint"
-        style={{'--size': size}}>
-        {number}
+    <div className={"hint " + hintStyle}
+        onMouseDown={(e) => {
+          if (e.button === 0) {
+            if (hintState === HintState.UNFILLED) {
+              setHintState(HintState.FILLED);
+            } else {
+              setHintState(HintState.UNFILLED);
+            }
+          }
+        }}>
+        {number !== -1 ? number : ""}
     </div>
   )
 }

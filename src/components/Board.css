@@ -1,19 +1,42 @@
+:root {
+  --board-size: 20px;
+  --board-border: 0.5px black solid;
+}
+
+.board {
+  display: inline-flex;
+  flex-direction: column;
+  border: 0.1px black solid;
+  padding: 0px;
+}
+
+.board-top {
+ display: flex;
+ flex-direction: row;
+ justify-content: flex-end;
+ align-items: flex-end;
+}
+
+.board-bottom {
+  display: flex;
+  flex-direction: row;
+}
+
 .grid {
-  display: inline-grid;
+  display: grid;
   --dims: 3;
-  grid-template-columns: repeat(var(--dims), auto);
-  grid-template-rows: repeat(var(--dims), auto);
+  grid-template-columns: repeat(var(--dims), 1fr);
+  grid-template-rows: repeat(var(--dims), 1fr);
   grid-gap: 0px;
-  border: 0.5px black solid;
+  border: var(--board-border);
   padding: 0px;
 }
 
 .block {
   display: inline-block;
-  --size: 20px;
-  height: var(--size);
-  width: var(--size);
-  border: 0.5px black solid;
+  height: var(--board-size);
+  width: var(--board-size);
+  border: var(--board-border);
   padding: 0px;
   position: relative;
   align-items: center;
@@ -37,11 +60,12 @@
 }
 
 .hint-pane {
-  display: inline-flex;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   align-items: center;
   justify-content: center;
-  border: 0.5px black solid;
-  background-color: #b5b5b5;
+  border: var(--board-border);
 }
 
 
@@ -52,28 +76,43 @@
   transform: translate(-50.5%, 18%); */
 
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  border: 0.5px black solid;
+  align-items: center;
+  justify-content: center;
+  --num-hints: 1;
+  height: var(--board-size);
+  width: var(--board-size);
   background-color: #b5b5b5;
+}
+
+.hint-bar.x {
+  flex-direction: row;
+  width: calc(var(--board-size) * var(--num-hints));
+}
+
+.hint-bar.y {
+  flex-direction: column;
+  height: calc(var(--board-size) * var(--num-hints));
 }
 
 /*TODO: simpler way to set dimensions?*/
 .hint { 
   display: flex;
-  --size: 20px;
-  height: var(--size);
-  width: var(--size);
+  height: var(--board-size);
+  width: var(--board-size);
   align-items: center;
   justify-content: center;
   font-size: 60%;
   color: #000;
-  border: #646464 0.5px solid;
+  border-left: #646464 0.5px solid;
+  border-right: #646464 0.5px solid;
+  border-top: var(--board-border);
+  border-bottom: var(--board-border);
   background-color: #c4c4c4;
   overflow: hidden;
   box-sizing: border-box;
+  user-select: none;
 }
 
 .hint.filled {
-  color: #2f2f2f;
+  color: #606060;
 }

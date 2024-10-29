@@ -6,11 +6,10 @@ HintPane.propTypes = {
   hint_arrs: PropTypes.arrayOf(
                 PropTypes.arrayOf(
                   PropTypes.number)).isRequired,
-  hints_x: PropTypes.bool.isRequired
+  x_axis_hints: PropTypes.bool.isRequired
 }
 
-function HintPane({ hint_arrs, hints_x }) {
-  console.log(hints_x);
+function HintPane({ hint_arrs, x_axis_hints }) {
   const largestHintArr = Math.max(...hint_arrs.map(arr => arr.length));
   
   function generateHintBars() {
@@ -22,8 +21,8 @@ function HintPane({ hint_arrs, hints_x }) {
       <HintBar 
         key={i} 
         hints={[...Array(fillNum).fill(-1), ...hint_arrs[i]]} 
-        vertical={hints_x ? false : true} 
-        length={`${largestHintArr * 20}px`} />
+        vertical={x_axis_hints ? false : true} 
+        length={largestHintArr} />
       )
     }
     return bars;
@@ -32,7 +31,7 @@ function HintPane({ hint_arrs, hints_x }) {
   return (
     <div 
       className="hint-pane"
-      style={{flexDirection: hints_x ? 'column' : 'row'}}>
+      style={{flexDirection: x_axis_hints ? 'column' : 'row'}}>
       {generateHintBars()}
     </div>
   )

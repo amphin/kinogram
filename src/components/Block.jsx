@@ -1,25 +1,23 @@
 import PropTypes from "prop-types";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import "./Board.css";
 import SVGCross from "./SVGCross";
 import { CellState } from "../CellState.js";
-import { SizeContext } from "./Board.jsx";
 
 Block.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  handleClick: PropTypes.func,
+  handleBlockClick: PropTypes.func.isRequired,
 };
 
-function Block({ x=-1, y=-1, handleClick }) {
+function Block({ x=-1, y=-1, handleBlockClick }) {
   const [cellState, setCellState] = useState(CellState.EMPTY);
-  const size = useContext(SizeContext);
 
-  const cellStyle = {
+  const cellStyle = Object.freeze({
     [CellState.EMPTY]: "empty",
     [CellState.FILLED]: "filled",
     [CellState.CROSSED]: "crossed",
-  }[cellState];
+  })[cellState];
 
   function renderCross() {
     {/* TODO: refer to cross.svg */}
@@ -33,18 +31,16 @@ function Block({ x=-1, y=-1, handleClick }) {
       return null;
     };
 
-
     useEffect(() => {
-      handleClick(x, y, cellState);
-    }, [cellState, handleClick, x, y]); // only on rerenders
+      handleBlockClick(x, y, cellState);
+    }, [cellState, handleBlockClick, x, y]); // only on rerenders
+
 
   return (
     <>
       <div 
       type="button" id="button-id"
       className={"block " + cellStyle}
-      style={{'--size': size}}
-      //TODO: add size parameter
 
       onMouseDown={(e) => {
         if (e.button === 0) {

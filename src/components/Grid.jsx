@@ -10,9 +10,6 @@ Grid.propTypes = {
 
 function Grid({dims, handleBlockClick}) { 
 
-  const handleClick = (x, y, cellState) => { 
-    console.log(`Block clicked at ${x}, ${y}: ${cellState}`);
-  }
 
   function generateBlocks(dims) {
     const blocks = [];
@@ -27,6 +24,7 @@ function Grid({dims, handleBlockClick}) {
       return blocks;
   }
 
+  //TODO: prevent right click default
   return (
     <>
     <div className="grid" style={{'--dims': dims}}>

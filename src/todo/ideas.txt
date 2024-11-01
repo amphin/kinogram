@@ -1,0 +1,7 @@
+- User board creator
+  - hints update as you draw on the board
+
+- User settings
+  - error checking: yes or no
+  - hint gray out: immediate, delay, or noone
+    - automatic cross out: yes or no

@@ -7,11 +7,11 @@ export const TestContext = createContext();
 function App() {
 
   const solution = [
-    [true, true, true, true, true],
-    [true, true, false, true, true],
-    [true, false, true, false, true],
-    [false, true, false, false, true],
-    [false, true, true, false, false]
+    [1, 1, 1, 1, 1],
+    [1, 1, -1, 1, 1],
+    [1, -1, 1, -1, 1],
+    [-1, 1, -1, -1, 1],
+    [-1, 1, 1, -1, -1]
   ]
 
   return (

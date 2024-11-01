@@ -26,7 +26,8 @@ function Hint({num}) {
               setHintState(HintState.UNFILLED);
             }
           }
-        }}>
+        }}
+        onContextMenu={(e) => e.preventDefault()}>
         {number !== -1 ? number : ""}
     </div>
   )

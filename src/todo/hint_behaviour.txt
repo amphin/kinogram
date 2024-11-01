@@ -1,0 +1,4 @@
+Gray out hints of a line when:
+ - all correct (true) blocks in its line are filled
+ - rest of blocks automatically crossed
+    - state of blocks being already crossed or empty does not matter 

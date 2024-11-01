@@ -10,8 +10,7 @@ function SVGCross({ outer, inner }) {
     width: outer,
     height: outer,
     display: "flex",
-    margin: "0 auto",
-    overflow: "hidden"
+    margin: "0 auto"
   };
 
   return (
@@ -20,14 +19,14 @@ function SVGCross({ outer, inner }) {
     x1="0" y1="0"
     x2={inner} 
     y2={inner} 
-    overflow="hidden" stroke="black" strokeWidth="1"/>
+    overflow="hidden" stroke="black" strokeWidth={inner/20}/>
 
     <line 
     x1={inner} 
     y1={inner} 
     x2="0" y2="0" 
-    overflow="hidden" stroke="black" strokeWidth="1" 
-    transform="rotate(90 9 9)"/>
+    overflow="hidden" stroke="black" strokeWidth={inner/20} 
+    transform={`rotate(90 ${inner/2} ${inner/2})`}/>
 </svg>
   )
 }

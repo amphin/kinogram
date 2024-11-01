@@ -12,6 +12,12 @@ function HintBar({hints, vertical, length}) {
   //TODO: neater way to do this?
   // const borderWidth = parseFloat(getComputedStyle(document.querySelector('.hint-bar')).borderWidth);
 
+  function grayOutHints() {
+    hints.forEach((hint, index) => {
+      document.querySelectorAll('.hint')[index].classList.add('filled');
+    })
+  }
+
   return (
     <div className={vertical ? 'hint-bar y' : 'hint-bar x'}
       style={{

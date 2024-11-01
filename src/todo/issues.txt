@@ -1,0 +1,6 @@
+SVG cross:
+- image instead?
+- fix slight difference in look when size scrolling between crossing
+
+Blocks:
+- don't trigger useEffect handleBlockClick when block is mounted

@@ -33,7 +33,7 @@ function Block({ x=-1, y=-1, handleBlockClick }) {
 
     useEffect(() => {
       handleBlockClick(x, y, cellState);
-    }, [cellState, handleBlockClick, x, y]); // only on rerenders
+    }, [cellState, handleBlockClick, x, y]); // only on rerenders, NOT ON MOUNT
 
 
   return (
@@ -41,10 +41,11 @@ function Block({ x=-1, y=-1, handleBlockClick }) {
       <div 
       type="button" id="button-id"
       className={"block " + cellStyle}
+      // draggable="true"
 
       onMouseDown={(e) => {
         if (e.button === 0) {
-          console.log("left clicked");
+          // console.log("left clicked");
           if (cellState === CellState.FILLED) {
             setCellState(CellState.EMPTY);
           } else {
@@ -52,7 +53,7 @@ function Block({ x=-1, y=-1, handleBlockClick }) {
           }
         }
         else if (e.button === 2) {
-          console.log("right clicked");
+          // console.log("right clicked");
           if (cellState === CellState.CROSSED) {
             setCellState(CellState.EMPTY);
           } else {
@@ -63,8 +64,7 @@ function Block({ x=-1, y=-1, handleBlockClick }) {
 
       onContextMenu={(e) => {
         e.preventDefault();
-      }}
-      >
+      }}>
 
       {renderCross()}
       </div>

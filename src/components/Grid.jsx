@@ -1,15 +1,18 @@
 import PropTypes from "prop-types";
 import "./Board.css"
 import Block from "./Block";
+import { createContext } from "react";
 
 Grid.propTypes = {
   dims: PropTypes.number.isRequired,
   handleBlockClick: PropTypes.func.isRequired
 }
 
+export const FirstCellContext = createContext([null, null, null]); // pre, post, button clicked
+export const BlocksPressedContext = createContext([]);
+export const HorizontalDragContext = createContext(null); // eliminate need for null
 
 function Grid({dims, handleBlockClick}) { 
-
 
   function generateBlocks(dims) {
     const blocks = [];
@@ -17,7 +20,13 @@ function Grid({dims, handleBlockClick}) {
         for (let x=0; x < dims; x++) {
           console.log("foring x=" + x + ", y=" + y);
           blocks.push(
-            <Block key="${x}-${y}" x={x} y={y} handleBlockClick={handleBlockClick}/>
+            <FirstCellContext.Provider value={[null, null, null]}>
+              <BlocksPressedContext.Provider value={[]}>
+                <HorizontalDragContext.Provider value={[null]}>
+                <Block key="${x}-${y}" x={x} y={y} handleBlockClick={handleBlockClick}/>
+                </HorizontalDragContext.Provider>
+              </BlocksPressedContext.Provider>
+            </FirstCellContext.Provider>
           );
         }
       }

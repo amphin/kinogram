@@ -11,7 +11,12 @@ Board.propTypes = {
 //TODO: default solution size 20, or isRequired?
 //TODO: non-square boards
 function Board({solution}) { //assumption that grid is square
-  if (solution.length !== solution[0].length) throw new Error("Grid ain't square mate");
+  let lengths = solution.map(row => row.length);
+  
+  if ((solution.length !== solution[0].length) || (new Set(lengths).size !== 1)) {
+    throw new Error("Grid ain't square mate");
+  }
+
   
   const hintPaneXRef = React.createRef();
   const hintPaneYRef = React.createRef();
@@ -26,6 +31,11 @@ function Board({solution}) { //assumption that grid is square
 
   const dims = solution.length;
 
+  const rowEvent = new CustomEvent('onRowComplete', { detail: { x: 1, y: 1 } });
+  const colEvent = new CustomEvent('onColComplete', { detail: { x: 1, y: 1 } });
+  document.dispatchEvent(rowEvent);
+  document.dispatchEvent(colEvent);
+
   // const hint_arrs = [
   //   [0, 1, 2, 3, 4, 5, 6],
   //   [2, 3, 4, 5, 6, 7],
@@ -34,6 +44,11 @@ function Board({solution}) { //assumption that grid is square
   //   [4, 5, 6, 7, 8, 9, 10]
   // ]
 
+  function grayOutHints() {
+    React.Children.forEach((child) => {
+      console.log("child key: " + child.key);
+    })
+  }
 
   function checkLineComplete(x, y) {
     //check row
@@ -67,6 +82,7 @@ function Board({solution}) { //assumption that grid is square
     gridState[y][x] = cellState;
 
     checkLineComplete(x, y);
+    grayOutHints();
   }
 
   //TODO: memoize/avoid calls past initial call?

@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 import "./Board.css"
 import HintBar from './HintBar.jsx'
@@ -26,6 +27,12 @@ function HintPane({ hint_arrs, x_axis_hints }) {
       )
     }
     return bars;
+  }
+
+  function fillHints(index) {
+    React.Children.forEach((child) => {
+      console.log("child key: " + child.key);
+    })
   }
 
   return (

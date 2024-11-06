@@ -4,3 +4,4 @@ SVG cross:
 
 Blocks:
 - don't trigger useEffect handleBlockClick when block is mounted
+- multiple buttons being pressed at the same time

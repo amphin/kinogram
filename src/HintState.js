@@ -1,4 +1,5 @@
 export const HintState = Object.freeze({
   UNFILLED: "UNFILLED",
-  FILLED: "FILLED"
+  FILLED: "FILLED",
+  UNUSED: "UNUSED"
 });

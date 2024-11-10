@@ -70,11 +70,11 @@ function Board({solution}) { //assumption that grid is square
 
     // console.log("Grid row: " + gridRow);
     // console.log("Solution row: " + solutionRow);
-    console.log("Row complete: " + rowComplete);
+    //console.log("Row complete: " + rowComplete);
 
     // console.log("Grid col: " + gridCol);
     // console.log("Solution col: " + solutionCol);
-    console.log("Column complete: " + colComplete);
+    //console.log("Column complete: " + colComplete);
   }
 
   function handleBlockClick(x, y, cellState) {

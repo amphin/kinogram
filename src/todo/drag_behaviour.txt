@@ -1,0 +1,2 @@
+- map non horizontal/vertical drag to block in the horizontal/vertical drag line
+- duplicate line in adjacent lines when dragged on (+ reverse duplication when undragged)

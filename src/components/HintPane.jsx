@@ -1,4 +1,3 @@
-import React from 'react'
 import PropTypes from 'prop-types'
 import "./Board.css"
 import HintBar from './HintBar.jsx'
@@ -7,14 +6,15 @@ HintPane.propTypes = {
   hint_arrs: PropTypes.arrayOf(
                 PropTypes.arrayOf(
                   PropTypes.number)).isRequired,
-  x_axis_hints: PropTypes.bool.isRequired
+  x_axis_hints: PropTypes.bool.isRequired,
+  hintsComplete: PropTypes.object.isRequired
 }
 
-function HintPane({ hint_arrs, x_axis_hints }) {
+function HintPane({ hint_arrs, x_axis_hints, hintsComplete }) {
   const largestHintArr = Math.max(...hint_arrs.map(arr => arr.length));
-  
+
   function generateHintBars() {
-    const bars = []
+    const bars = [];
     
     for (let i = 0; i < hint_arrs.length; i++) {
       const fillNum = largestHintArr - hint_arrs[i].length;
@@ -23,16 +23,12 @@ function HintPane({ hint_arrs, x_axis_hints }) {
         key={i} 
         hints={[...Array(fillNum).fill(-1), ...hint_arrs[i]]} 
         vertical={x_axis_hints ? false : true} 
-        length={largestHintArr} />
+        length={largestHintArr}
+        hintComplete={hintsComplete}
+      />
       )
     }
     return bars;
-  }
-
-  function fillHints(index) {
-    React.Children.forEach((child) => {
-      console.log("child key: " + child.key);
-    })
   }
 
   return (

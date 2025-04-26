@@ -8,24 +8,20 @@ Grid.propTypes = {
   handleBlockClick: PropTypes.func.isRequired
 }
 
-export let FirstCellContext = createContext(); // pre, post, button clicked
-export let BlocksPressedContext = createContext();
-export let DragDirectionContext = createContext();
+export const FirstCellContext = createContext(); // pre, post, button clicked
+export const BlocksPressedContext = createContext();
+export const DragDirectionContext = createContext();
 
 function Grid({dims, handleBlockClick}) { 
+   const blocks = [];
+  
+  // context variables for drag behaviour
   let firstCell = {preState: null, postState: null, button: null};
   firstCell.set = (pre, post, button) => {
-    firstCell.preState = pre;
-    firstCell.postState = post;
-    firstCell.button = button;
+    firstCell.preState = pre; // cell state before being clicked
+    firstCell.postState = post; // cell state after being clicked
+    firstCell.button = button; // button used to click cell
   };
-  
-  /*method to add x and y, returns:
-  'x' if x is the same, 
-  'y' if y is the same, 
-  false if both are the same, 
-  null if neither are the same
-  */
   let blocksPressed = {x: new Set(), y: new Set()};
   blocksPressed.has = (x, y) => blocksPressed.x.has(x) || blocksPressed.y.has(y);
   blocksPressed.onlyHas = (x, y) => blocksPressed.x.has(x) != blocksPressed.y.has(y);
@@ -33,12 +29,12 @@ function Grid({dims, handleBlockClick}) {
   let dragDirection = {isHorizontal: null};
 
    function generateBlocks(dims) {
-    const blocks = [];
+    console.trace('GENERATEBLOCKS CALLED: ');
       for (let y=0; y < dims; y++) {
         for (let x=0; x < dims; x++) {
           console.log("foring x=" + x + ", y=" + y);
           blocks.push(
-            <Block key="${x}-${y}" x={x} y={y} handleBlockClick={handleBlockClick} />
+            <Block key={`${x}-${y}`} x={x} y={y} handleBlockClick={handleBlockClick} />
           );
         }
       }
@@ -47,7 +43,6 @@ function Grid({dims, handleBlockClick}) {
 
   //TODO: prevent right click default
   return (
-    <>
     <div className="grid" style={{'--dims': dims}} onClick={console.log("clicked grid")}>
       <FirstCellContext.Provider value={firstCell}>
         <BlocksPressedContext.Provider value={blocksPressed}>
@@ -57,7 +52,6 @@ function Grid({dims, handleBlockClick}) {
         </BlocksPressedContext.Provider>
       </FirstCellContext.Provider>
     </div>
-    </>
   );
 }
 

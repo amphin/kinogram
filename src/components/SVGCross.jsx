@@ -31,4 +31,4 @@ function SVGCross({ outer, inner }) {
   )
 }
 
-export default SVGCross
+export default SVGCross;

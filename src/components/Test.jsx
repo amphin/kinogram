@@ -1,12 +1,17 @@
-import { useContext } from "react";
-import { TestContext } from "../App";
+import { useEffect } from "react";
 
-function Test() {
-  const testContext = useContext(TestContext);
-  console.log("testContext is " + testContext);
+function Test({ stateProp }) {
 
+  function doSmth() {
+    console.log('did something');
+  }
+
+  useEffect(() => {
+    doSmth();
+  }, [stateProp]);
+  
   return (
-    <div>{testContext}</div>
+    <div>{stateProp}</div>
   )
 }
 

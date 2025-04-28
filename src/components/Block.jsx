@@ -228,7 +228,6 @@ function Block({ x=-1, y=-1, handleBlockClick }) {
       onContextMenu={(e) => e.preventDefault()} // redrawn crosses?
       >
       
-
       {renderCross()}
       </div>
   );

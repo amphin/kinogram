@@ -6,10 +6,10 @@
 .board {
   display: inline-flex;
   flex-direction: column;
-  /* border: 0.1px black solid; */
+  /* border: 1px solid black; */
   border-radius: 5px;
-  padding: 0px;
   background-color: #6e6e6e;
+  padding: 3px;
 }
 
 .board-top {
@@ -31,7 +31,7 @@
   grid-template-rows: repeat(var(--dims), 1fr);
   grid-gap: 3px;
   /* border: var(--board-border); */
-  padding: 0px 3px 3px 0px;
+  padding: 3px 0px 0px 3px;
 }
 
 .block {
@@ -68,11 +68,10 @@
   align-items: flex-start;
   align-items: center;
   justify-content: center;
-  /* border: var(--board-border); */
-  padding: 3px;
+  border: 0.1px solid black;
+  /* padding: 3px 3px 3px 3px; */
   gap: 3px;
 }
-
 
 .hint-bar {
   /* position: absolute;
@@ -87,9 +86,11 @@
   height: var(--board-size);
   width: var(--board-size);
   background-color: #b5b5b5;
+  border-radius: 5px;
 }
 
 .hint-bar.x {
+  /* border: 1px solid black; */
   flex-direction: row;
   width: calc(var(--board-size) * var(--num-hints));
 }
@@ -97,6 +98,14 @@
 .hint-bar.y {
   flex-direction: column;
   height: calc(var(--board-size) * var(--num-hints));
+}
+
+.hp-bottom-edge {
+  border-radius: 0px 0px 5px 5px;
+}
+
+.hp-right-edge {
+  border-radius: 0px 5px 5px 0px;
 }
 
 /*TODO: simpler way to set dimensions?*/

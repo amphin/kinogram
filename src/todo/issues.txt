@@ -5,3 +5,7 @@ SVG cross:
 Blocks:
 - don't trigger useEffect handleBlockClick when block is mounted
 - multiple buttons being pressed at the same time
+
+Layout: 
+- hint pane x not properly aligned with grid
+  - bit of extra padding on the bottom hint bar pushing everything up

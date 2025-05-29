@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import classNames from "classnames";
 import Hint from "./Hint.jsx";
 import "./Board.css"
 import { useEffect } from "react";
@@ -7,10 +8,12 @@ HintBar.propTypes = {
   hints: PropTypes.arrayOf(PropTypes.number).isRequired,
   vertical: PropTypes.bool.isRequired,
   length: PropTypes.number.isRequired,
-  hintsComplete: PropTypes.object
+  hintsComplete: PropTypes.object,
+  vLast: PropTypes.bool.isRequired,
+  hlast: PropTypes.bool.isRequired
 }
 
-function HintBar({hints, vertical, length, hintsComplete}) {
+function HintBar({hints, vertical, length, hintsComplete, vLast, hlast}) {
   //TODO: neater way to do this?
   // const borderWidth = parseFloat(getComputedStyle(document.querySelector('.hint-bar')).borderWidth);
   let hintComponents = [];
@@ -22,7 +25,8 @@ function HintBar({hints, vertical, length, hintsComplete}) {
   // }, [hintsComplete]);
   
   return (
-    <div className={vertical ? 'hint-bar y' : 'hint-bar x'}
+    <div className={classNames("hint-bar", { "y": vertical, "x": !vertical, "hp-bottom-edge": vLast, "hp-right-edge": hlast})}
+
       style={{
         '--num-hints': length
       }}>

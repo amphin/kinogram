@@ -7,10 +7,12 @@ HintPane.propTypes = {
                 PropTypes.arrayOf(
                   PropTypes.number)).isRequired,
   x_axis_hints: PropTypes.bool.isRequired,
-  hintsComplete: PropTypes.object.isRequired
+  hintsComplete: PropTypes.object.isRequired,
+  vLast: PropTypes.bool.isRequired,
+  hlast: PropTypes.bool.isRequired
 }
 
-function HintPane({ hint_arrs, x_axis_hints, hintsComplete }) {
+function HintPane({ hint_arrs, x_axis_hints, hintsComplete, vLast, hlast }) {
   const largestHintArr = Math.max(...hint_arrs.map(arr => arr.length));
 
   function generateHintBars() {
@@ -20,11 +22,13 @@ function HintPane({ hint_arrs, x_axis_hints, hintsComplete }) {
       const fillNum = largestHintArr - hint_arrs[i].length;
       bars.push(
       <HintBar 
-        key={i} 
+        key={i}
         hints={[...Array(fillNum).fill(-1), ...hint_arrs[i]]} 
         vertical={x_axis_hints ? false : true} 
         length={largestHintArr}
         hintComplete={hintsComplete}
+        vLast={i === hint_arrs.length - 1 && x_axis_hints}
+        hlast={i === hint_arrs.length - 1 && !x_axis_hints}
       />
       )
     }

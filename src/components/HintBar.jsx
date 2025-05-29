@@ -14,7 +14,7 @@ HintBar.propTypes = {
 }
 
 function HintBar({hints, vertical, length, hintsComplete, vLast, hlast}) {
-  //TODO: neater way to do this??
+  //TODO: neater way to do this?
   // const borderWidth = parseFloat(getComputedStyle(document.querySelector('.hint-bar')).borderWidth);
   let hintComponents = [];
 

@@ -3,32 +3,29 @@ import "./Board.css"
 import HintBar from './HintBar.jsx'
 
 HintPane.propTypes = {
-  hint_arrs: PropTypes.arrayOf(
+  hintArrs: PropTypes.arrayOf(
                 PropTypes.arrayOf(
                   PropTypes.number)).isRequired,
-  x_axis_hints: PropTypes.bool.isRequired,
-  hintsComplete: PropTypes.object.isRequired,
-  vLast: PropTypes.bool.isRequired,
-  hlast: PropTypes.bool.isRequired
+  horizontalHints: PropTypes.bool.isRequired,
+  hintIndex: PropTypes.arrayOf(PropTypes.number).isRequired
 }
 
-function HintPane({ hint_arrs, x_axis_hints, hintsComplete, vLast, hlast }) {
-  const largestHintArr = Math.max(...hint_arrs.map(arr => arr.length));
+function HintPane({ hintArrs, horizontalHints, hintIndex }) {
+  const largestHintArr = Math.max(...hintArrs.map(arr => arr.length));
 
   function generateHintBars() {
     const bars = [];
     
-    for (let i = 0; i < hint_arrs.length; i++) {
-      const fillNum = largestHintArr - hint_arrs[i].length;
+    for (let i = 0; i < hintArrs.length; i++) {
+      const fillNum = largestHintArr - hintArrs[i].length;
       bars.push(
       <HintBar 
         key={i}
-        hints={[...Array(fillNum).fill(-1), ...hint_arrs[i]]} 
-        vertical={x_axis_hints ? false : true} 
+        hints={[...Array(fillNum).fill(-1), ...hintArrs[i]]} 
+        horizontalHints={horizontalHints} 
         length={largestHintArr}
-        hintComplete={hintsComplete}
-        vLast={i === hint_arrs.length - 1 && x_axis_hints}
-        hlast={i === hint_arrs.length - 1 && !x_axis_hints}
+        fillNum={fillNum}
+        hintIndex={[hintIndex[0], i, 0]}
       />
       )
     }
@@ -38,11 +35,10 @@ function HintPane({ hint_arrs, x_axis_hints, hintsComplete, vLast, hlast }) {
   return (
     <div 
       className="hint-pane"
-      style={{flexDirection: x_axis_hints ? 'column' : 'row'}}>
+      style={{flexDirection: horizontalHints ? 'column' : 'row'}}>
       {generateHintBars()}
     </div>
   )
 }
-
 
 export default HintPane;

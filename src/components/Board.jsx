@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, createContext } from 'react';
 import PropTypes from 'prop-types';
 import Grid from './Grid';
 import HintPane from './HintPane';
@@ -7,7 +7,6 @@ import { CellState, CellStateBool as CSB, mapIntToCellState } from '../CellState
 Board.propTypes = {
   solution: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.number)).isRequired
 }
-
 
 //TODO: default solution size 20, or isRequired?
 //TODO: non-square boards
@@ -26,63 +25,27 @@ function Board({ solution }) { //assumption that grid is square
       () => CellState.EMPTY)
     );
 
-  const dims = solution.length;
+    
+    const dims = solution.length;
+    
+    let hints = new Array(2);
+    let hintStates = new Array(2); // boolean
+    let xHintStates = new Array();
+    let yHintStates = new Array();
+    
+    const [hintsComplete, setHintsComplete] = useState(hintStates);
 
-  let horizontalHints;
-  let verticalHints;
-
-  const [horizontalHintsComplete, setHorizontalHintsComplete] = useState({});
-  const [verticalHintsComplete, setVerticalHintsComplete] = useState({});
-  // const hint_arrs = [
-  //   [0, 1, 2, 3, 4, 5, 6],
-  //   [2, 3, 4, 5, 6, 7],
-  //   [2, 3, 4, 5, 6, 7, 8],
-  //   [9],
-  //   [4, 5, 6, 7, 8, 9, 10]
-  // ]
-
-
-  function checkLineComplete(y, x) {
-    //check row
-    let gridRow = gridState[x];
-    let solutionRow = solution[x];
-    let rowComplete = gridRow.map((cell, i) => CSB[cell] === CSB[solutionRow[i]]).every((cell) => cell);
-
-    let gridCol = gridState.map(row => row[y]);
-    let solutionCol = solution.map(row => row[y]);
-    let colComplete = gridCol.map((cell, i) => CSB[cell] === CSB[solutionCol[i]]).every((cell) => cell);
-
-    if (rowComplete) {
-      console.log("row", x, "complete");
-      //TODO: gray out all hints in x-axis hint pane, via refs
-      // setHorizontalHintsComplete({x: new Array(horizontalHints[x].length).fill(true)});
-    }
-
-    if (colComplete) {
-      console.log("column", y, "complete");
-      //TODO: gray out all hints in y-axis hint pane, via refs
-      // setVerticalHintsComplete({y: new Array(verticalHints[y].length).fill(true)});
-    }
-
-    // console.log("Grid row: " + gridRow);
-    // console.log("Solution row: " + solutionRow);
-    //console.log("Row complete: " + rowComplete);
-
-    // console.log("Grid col: " + gridCol);
-    // console.log("Solution col: " + solutionCol);
-    //console.log("Column complete: " + colComplete);
-  }
 
   function handleBlockClick(x, y, cellState) {
     console.log(`Block clicked at ${x}, ${y}: ${cellState}`);
     gridState[y][x] = cellState;
 
-    checkLineComplete(x, y);
+    // checkLineComplete(x, y);
   }
 
   //TODO: memoize/avoid calls past initial call?
-    function createHints(grid, x_axis) {
-    let hints_arrs = [];
+    function createHints(grid, xAxis) {
+    let hintsArrs = [];
 
     for (let i = 0; i < grid.length; i++) {
       let i_string = grid[i].map((x) => CSB[x] ? 1 : 0).join(''); // hints only count filled cells
@@ -92,13 +55,21 @@ function Board({ solution }) { //assumption that grid is square
       i_split.forEach((x) => x ? hints.push(x.length) : undefined);
       hints.length === 0 ? hints = [0] : hints;
 
-      hints_arrs.push(hints);
+      hintsArrs.push(hints);
     }
 
-    if (x_axis) { horizontalHints = hints_arrs; }
-    else { verticalHints = hints_arrs; }
-
-    return hints_arrs;
+    if (xAxis) { 
+      // console.log("xAxis");
+      hints[0] = hintsArrs;
+      hintStates[0] = hintsArrs.map(row => row.map(x => false));
+    } else {
+      // console.log("yAxis");
+      hints[1] = hintsArrs;
+      hintStates[1] = hintsArrs.map(row => row.map(x => false));
+    }
+    // console.log(hints);
+    // console.log(hintStates);
+    return hintsArrs;
   }
 
   function transpose(grid){
@@ -113,16 +84,16 @@ function Board({ solution }) { //assumption that grid is square
       <div className="board">
         <div className="board-top">
           <HintPane
-            hint_arrs={createHints(transpose(solution), false)}
-            x_axis_hints={false}
-            hintsComplete={horizontalHintsComplete}/>
+            hintArrs={createHints(transpose(solution), false)} 
+            horizontalHints={false} 
+            hintIndex={[1,0,0]}/>
         </div>
         
         <div className="board-bottom">
           <HintPane
-            hint_arrs={createHints(solution, true)} 
-            x_axis_hints={true} 
-            hintsComplete={verticalHintsComplete}/>
+            hintArrs={createHints(solution, true)} 
+            horizontalHints={true} 
+            hintIndex={[0,0,0]}/>
 
           <Grid dims={dims} handleBlockClick={handleBlockClick}/>
         </div>

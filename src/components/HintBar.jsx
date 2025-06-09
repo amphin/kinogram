@@ -2,36 +2,38 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 import Hint from "./Hint.jsx";
 import "./Board.css"
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 
 HintBar.propTypes = {
   hints: PropTypes.arrayOf(PropTypes.number).isRequired,
-  vertical: PropTypes.bool.isRequired,
+  horizontalHints: PropTypes.bool.isRequired,
   length: PropTypes.number.isRequired,
-  hintsComplete: PropTypes.object,
-  vLast: PropTypes.bool.isRequired,
-  hlast: PropTypes.bool.isRequired
+  fillNum: PropTypes.number.isRequired,
+  hintIndex: PropTypes.arrayOf(PropTypes.number).isRequired
+  // vLast: PropTypes.bool.isRequired,
+  // hlast: PropTypes.bool.isRequired
 }
 
-function HintBar({hints, vertical, length, hintsComplete, vLast, hlast}) {
+function HintBar({ hints, horizontalHints, length, fillNum, hintIndex }) {
   //TODO: neater way to do this?
-  // const borderWidth = parseFloat(getComputedStyle(document.querySelector('.hint-bar')).borderWidth);
   let hintComponents = [];
 
-  // useEffect(() => {
-  //   if (hintsComplete) {
-  //     console.log(hintsComplete.keys());
-  //   }
-  // }, [hintsComplete]);
-  
   return (
-    <div className={classNames("hint-bar", { "y": vertical, "x": !vertical, "hp-bottom-edge": vLast, "hp-right-edge": hlast})}
+    <div className={classNames("hint-bar", { "x": horizontalHints, "y": !horizontalHints})}
 
       style={{
         '--num-hints': length
       }}>
       {hints.map((hint, index) => {
-          const hintComponent = <Hint key={index} num={hint}/>;
+          const hintComponent = 
+            <Hint key={index} 
+            num={hint} 
+            hintIndex={[hintIndex[0], hintIndex[1], index - fillNum]}
+            />
+
+          let hStr = horizontalHints ? "x" : "y";
+          console.log(hStr + " hintIndex: " + [hintIndex[0], hintIndex[1], index - fillNum] + " -> " + hint);
+          
           hintComponents.push(hintComponent);
           return hintComponent;
       })}
@@ -39,4 +41,4 @@ function HintBar({hints, vertical, length, hintsComplete, vLast, hlast}) {
   )
 }
 
-export default HintBar
+export default HintBar;

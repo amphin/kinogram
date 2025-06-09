@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 import { HintState } from "../HintState.js";
 
 Hint.propTypes = {  
-  num: PropTypes.number.isRequired
+  num: PropTypes.number.isRequired,
+  hintIndex: PropTypes.arrayOf(PropTypes.number),
 }
 
-function Hint({num}) {
+function Hint({ num, hintIndex }) {
   const [number, setNumber] = useState(num)
   const [hintState, setHintState] = useState(HintState.UNFILLED) //need state?
 
@@ -22,12 +23,11 @@ function Hint({num}) {
       setNumber("");
       setHintState(HintState.UNUSED);
     }
-  }, [number])
+  }, [number]);
 
-
-  function fill() {
-    console.log("filling hint " + num);
-  }
+  // useEffect (if !HintState.UNUSED):
+  //    -> if hint state becomes true, setHintState(HintState.FILLED)
+  //    -> if hint state becomes false, setHintState(HintState.UNFILLED)
 
   return (
     <div className={"hint " + hintStyle}

@@ -12,7 +12,7 @@ export const FirstCellContext = createContext(); // pre, post, button clicked
 export const BlocksPressedContext = createContext();
 export const DragDirectionContext = createContext();
 
-function Grid({dims, handleBlockClick}) { 
+function Grid({ dims, handleBlockClick }) { 
    const blocks = [];
   
   // context variables for drag behaviour
@@ -29,10 +29,10 @@ function Grid({dims, handleBlockClick}) {
   let dragDirection = {isHorizontal: null};
 
    function generateBlocks(dims) {
-    console.trace('GENERATEBLOCKS CALLED: ');
+    // console.trace('GENERATEBLOCKS CALLED: ');
       for (let y=0; y < dims; y++) {
         for (let x=0; x < dims; x++) {
-          console.log("foring x=" + x + ", y=" + y);
+          // console.log("foring x=" + x + ", y=" + y);
           blocks.push(
             <Block key={`${x}-${y}`} x={x} y={y} handleBlockClick={handleBlockClick} />
           );
